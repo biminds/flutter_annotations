@@ -247,7 +247,7 @@ class DioUtil {
       CancelToken cancelToken,
       Map<String, dynamic> queryParameters}) async {
     //处理  url传参问题
-    while (path.indexOf("{") >= 0 && path.indexOf("}") >= 0) {
+    while (path.contains("{") && path.contains("}")) {
       int start = path.indexOf("{");
       int end = path.indexOf("}");
       String pathPara = path.substring(start + 1, end);

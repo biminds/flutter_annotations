@@ -23,9 +23,9 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
 2. Annotate **your own RestClient class** with **@Get** 
 
    ```Dart
-      @Rest(rootUrl: "https://api.biminds.cn/")
-      abstract class RestClient {
-  
+       @Rest(rootUrl: "https://api.biminds.cn/")
+       abstract class RestClient {
+         
         // OK
         @Get(path: "queryTeachers")
         List getData(@Param() String name,@Param() int id);
@@ -33,39 +33,51 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
         // OK
         @Get(path: "queryTeachers/{name}")
         List getData(@Path() String name,@Param() int id);
-
+        
         // OK
         @Get(path: "queryTeachers?name={name}")
         List getData(@Path() String name,@Param() int id);
-
+        
         // OK
         @Get(path: "queryTeachers?name={name}&id={id}")
         Map getData(@Path() String name,@Param() int id);
-     
+        
         // OK
         @Get(path: "queryTeachers/{name}/{id}")
         dynamic getData(@Path() String name,@Param() int id); 
-
+        
         // WRONG
         @Get(path: "queryTeachers")
         getData(@Body() String name);// Wrong, `@Body` can't be defined in `@Get`.
- 
+
         // WRONG
         @Get(path: "queryTeachers/{name}/{id}")
-        List getData(@Path() String name); // Wrong, "id" must be defined with `@Path`.
-     
+        getData(@Path() String name); // Wrong, "id" must be defined with `@Path`.
+        
         // WRONG
         @Get(path: "queryTeachers/{name}/{id}")
         getData(@Path() String name,@Param() int id); // Wrong, "id" must be defined with `@Path`.
-            
+        
         // WRONG
         @Get(path: "queryTeachers/{name}/{id}")
         Map getData(@Param() String name,@Param() int id); // Wrong, "name"  and "id" must be defined with `@Path`.
-         
+        
         // WRONG
         @Get(path: "queryTeachers")
-        int getData(@Param() String name,@Param() int id); // Wrong, method return must be Map,List,void,dynamic.
-               
+        List<HomeBannerModel> getData<List>(@Param() String name,@Param() int id); // Wrong, method return must be HomeBannerModel
+        
+        // OK
+        @Get(path: "queryTeachers")
+        HomeBannerModel getData<List>(@Param() String name,@Param() int id); // OK, method return must be HomeBannerModel
+
+        // WRONG
+        @Get(path: "queryTeachers")
+        Map<HomeBannerModel> getData<Map>(@Param() String name,@Param() int id); // Wrong, method return must be HomeBannerModel
+        
+        // OK
+        @Get(path: "queryTeachers")
+        HomeBannerModel getData<Map>(@Param() String name,@Param() int id); // OK, method return must be HomeBannerModel        
+        
       }
    ```   
 3. Annotate **your own RestClient class** with **Post**
@@ -76,12 +88,7 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
       
         // OK
         @Post(path: "updateTeacherInfo")
-        Map postData(@Body() Map map);
-     
-        // WRONG
-        @Post(path: "updateTeacherInfo")
-        int postData(@Body() String map);// Wrong, method return must be Map,List,void,dynamic.         
-        
+        Map postData(@Body() Map map);      
       }
    ```   
 4. Annotate **your own RestClient class** with **Delete**
@@ -126,10 +133,6 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
         @Delete(path: "deleteTeacherById/{name}/{id}")
         deleteDate(@Param() String name,@Param() int id); // Wrong, "name"  and "id" must be defined with `@Path`.
               
-        // WRONG
-        @Delete(path: "deleteTeacherById")
-        int deleteDate(@Param() String name); // Wrong, method return must be Map,List,void,dynamic.             
-  
       }
    ```   
 5. Annotate **your own RestClient class** with **Put**
@@ -143,9 +146,6 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
         @Put(path: "updateTeacher")
         updateTeacher(@Body() Map map);
      
-        // WRONG
-        @Delete(path: "updateTeacher")
-        int updateTeacher(@Body() Map map); // Wrong, method return must be Map,List,void,dynamic.             
        
       }
    ```   

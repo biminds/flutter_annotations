@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'dart:convert';
 
 class LogOfFormatInterceptor extends LogInterceptor {
-
   LogOfFormatInterceptor({
     request = true,
     requestHeader = true,
@@ -75,10 +74,10 @@ class LogOfFormatInterceptor extends LogInterceptor {
       temp = value.toString().replaceAll(" ", "");
     }
     int startTimes = 0;
-    while (temp.indexOf("{") > -1 ||
-        temp.indexOf("}") > -1 ||
-        temp.indexOf("[") > -1 ||
-        temp.indexOf("]") > -1) {
+    while (temp.contains("{") ||
+        temp.contains("}") ||
+        temp.contains("[") ||
+        temp.contains("]")) {
       int startH = temp.indexOf("{");
       int startD = temp.indexOf("[");
       int endH = temp.indexOf("}");

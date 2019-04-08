@@ -49,15 +49,15 @@ class {{{className}}}Impl extends {{{className}}}{
     queryParameters = <String, dynamic>{{{.}}};
     {{/queryParameters}}
     
-    _dio.{{{methodAnnotationName}}}<{{returnType}}>(path,data: data, queryParameters: queryParameters)
+    _dio.{{{methodAnnotationName}}}<{{methodGenericType}}>(path,data: data, queryParameters: queryParameters)
           .then((response) {
         _execute(response, (data) {
-            {{#methodGeneric}}
+            {{#returnType}}
             successCallback({{.}}.fromJson(data));
-            {{/methodGeneric}}
-            {{^methodGeneric}}
+            {{/returnType}}
+            {{^returnType}}
             successCallback(data);
-            {{/methodGeneric}}
+            {{/returnType}}
         }, failCallback: failCallback);
         }, onError: (err) {
         failCallback(1, err.toString());

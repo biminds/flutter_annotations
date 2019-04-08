@@ -1,0 +1,1 @@
+//export 'package:flutterannotations_example/src/rest_client.dart';

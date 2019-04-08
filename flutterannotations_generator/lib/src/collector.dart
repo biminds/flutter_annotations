@@ -1,6 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:build/src/builder/build_step.dart';
-import 'package:flutterannotations/flutterannotations.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:mustache4dart/mustache4dart.dart';
@@ -15,6 +13,8 @@ class RestCollector {
   //  	"classDocumentationComment":"balabalabal",
   //		"methods": [{
   //			"methodName": "getData",
+  //      "methodGeneric":"Map",
+  //      "methodGenericType":"Map",
   //			"queryParameters": {
   //        "pageSize":"1",
   //      },
@@ -61,7 +61,7 @@ class RestCollector {
     List<Map<String, dynamic>> methodsList = <Map<String, dynamic>>[];
 
     element.methods.forEach((method) {
-      _addMethodEntry(method, methodsList);
+      _addMethodEntry(method, methodsList, importList);
     });
 
     restAnnotationMap["methods"] = methodsList;
@@ -69,18 +69,46 @@ class RestCollector {
     importClazz(element, importList);
   }
 
-  void _addMethodEntry(
-      MethodElement method, List<Map<String, dynamic>> methodsList) {
+  void _addMethodEntry(MethodElement method,
+      List<Map<String, dynamic>> methodsList, List<String> importList) {
     Map<String, dynamic> methodMap = <String, dynamic>{};
     methodsList.add(methodMap);
 
     methodMap['methodName'] = method.name;
     methodMap['methodDocumentationComment'] = method.documentationComment;
-    methodMap['returnType'] = method.returnType.name;
+
+    var returnType = method.returnType.name;
+
+    if (returnType == "dynamic" ||
+        returnType == "Object" ||
+        returnType == "List" ||
+        returnType == "int" ||
+        returnType == "BigInt" ||
+        returnType == "String" ||
+        returnType == "double" ||
+        returnType == "num" ||
+        returnType == "bool" ||
+        returnType == "Set" ||
+        returnType == "StringBuffer" ||
+        returnType == "Map") {
+      returnType = null;
+    } else {
+      importClazz(method.returnType.element, importList);
+    }
+    methodMap['returnType'] = returnType;
+//    print("==============${method.returnType.element.location.components}");
 
     method.typeParameters.forEach((e) {
-      methodMap['methodGeneric'] = e;
+      methodMap['methodGeneric'] = e.name;
     });
+
+    String methodGeneric = methodMap['methodGeneric'];
+
+    if (methodGeneric == "List" || methodGeneric == "Map") {
+      methodMap['methodGenericType'] = methodGeneric;
+    } else {
+      methodMap['methodGenericType'] = "Map";
+    }
 
     Map<String, dynamic> methodAnnotation = <String, dynamic>{};
     methodMap['methodAnnotation'] = methodAnnotation;
