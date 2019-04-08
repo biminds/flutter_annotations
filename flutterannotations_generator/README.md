@@ -171,7 +171,7 @@ example:
 
 ```yaml
 dev_dependencies:
-  flutterannotations: any
+  flutterannotations_generator: any
 ```
 
 ## install from source code
@@ -181,7 +181,7 @@ example:
 
 ```yaml
 dev_dependencies:
-  flutterannotations:
-    path: flutterannotations
+  flutterannotations_generator:
+    path: flutterannotations_generator
 ```
   
