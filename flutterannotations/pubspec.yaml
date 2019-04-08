@@ -1,0 +1,14 @@
+name: flutterannotations
+description: Fast Flutter Development. Easy maintenance.
+version: 0.0.1
+author: leo<leo@biminds.cn>
+homepage:  https://github.com/biminds/flutterannotations.git
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  #latest version  https://github.com/flutterchina/dio
+  dio: ^2.1.0
+
+

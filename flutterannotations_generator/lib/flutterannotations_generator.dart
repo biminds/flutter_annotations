@@ -1,0 +1,2 @@
+library flutterannotations_generator;
+
