@@ -171,10 +171,10 @@ example:
 
 ```yaml
 dependencies:
-  flutterannotations: any
+  flutterannotations: ^1.0.0
 
 dev_dependencies:
-  flutterannotations_generator: any
+  flutterannotations_generator: ^1.0.0
 ```
 
 ## install from source code
