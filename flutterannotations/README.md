@@ -170,7 +170,7 @@ add packages to dev_dependencies in your pubspec.yaml
 example:
 
 ```yaml
-dev_dependencies:
+dependencies:
   flutterannotations: any
 ```
 
@@ -180,7 +180,7 @@ clone the code, then put it into your workspace, announce it in your pubspec.yam
 example:
 
 ```yaml
-dev_dependencies:
+dependencies:
   flutterannotations:
     path: flutterannotations
 ```
