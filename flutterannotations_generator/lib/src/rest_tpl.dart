@@ -67,12 +67,21 @@ class {{{className}}}Impl extends {{{className}}}{
     _dio.{{{methodAnnotationName}}}<{{methodGenericType}}>(path,data: data, options:options,queryParameters: queryParameters)
           .then((response) {
         _execute(response, (data) {
-            {{#returnType}}
-            successCallback({{.}}.fromJson(data));
-            {{/returnType}}
-            {{^returnType}}
+            {{#mapType}}
+            successCallback({{returnType}}.fromJson(data));
+            {{/mapType}}
+            
+            {{#listType}}
+            List<{{returnType}}> result = [];
+            data.forEach((item){
+            result.add({{returnType}}.fromJson(item));
+            });
+            successCallback(result);
+            {{/listType}}
+            
+            {{#nullType}}
             successCallback(data);
-            {{/returnType}}
+            {{/nullType}}
         }, failCallback: failCallback);
         }, onError: (err) {
         failCallback(1, err.toString());

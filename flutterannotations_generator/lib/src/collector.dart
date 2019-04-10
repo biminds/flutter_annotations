@@ -18,9 +18,11 @@ class RestCollector {
   //  	"classDocumentationComment":"balabalabal",
   //		"methods": [{
   //			"methodName": "getData",
-  //      "methodGeneric":"Map",
+  //      "methodGeneric":"M",
   //      "methodGenericType":"Map",
-  //      "parseType":"Map",
+  //      "mapType":"mapType",
+  //      "listType":"listType",
+  //      "nullType":"nullType",
   //			"queryParameters": {
   //        "pageSize":"1",
   //      },
@@ -121,11 +123,14 @@ class RestCollector {
     });
 
     String methodGeneric = methodMap['methodGeneric'];
-
-    if (methodGeneric == "L") {
+    if (methodGeneric == "L" && returnType != null) {
       methodMap['methodGenericType'] = "List";
-      methodMap['parseType'] = ()=> null;
+      methodMap['listType'] = "listType";
+    } else if (methodGeneric == "M" && returnType != null) {
+      methodMap['methodGenericType'] = "Map";
+      methodMap['mapType'] = "mapType";
     } else {
+      methodMap['nullType'] = "nullType";
       methodMap['methodGenericType'] = "Map";
     }
 
