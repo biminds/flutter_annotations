@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'log_of_format_interceptor.dart';
 
 /// <BaseResp<T> 返回 status code msg data.
 class BaseResp<T> {
@@ -128,18 +127,9 @@ class DioUtil {
   /// PKCS12 证书密码.
   String _pKCSPwd;
 
-  /// 是否是debug模式.
-  static bool _isDebug = false;
-
   DioUtil() {
     _options = getDefOptions();
     _dio = new Dio(_options);
-    setInterceptor();
-  }
-
-  /// 打开debug模式.
-  static void openDebug() {
-    _isDebug = true;
   }
 
   /// set Config.
@@ -271,36 +261,39 @@ class DioUtil {
     if (response.statusCode == HttpStatus.ok ||
         response.statusCode == HttpStatus.created) {
       try {
-        if (response.data is Map) {
-          _status = (response.data[_statusKey] is int)
-              ? response.data[_statusKey].toString()
-              : response.data[_statusKey];
-          _code = (response.data[_codeKey] is String)
-              ? int.tryParse(response.data[_codeKey])
-              : response.data[_codeKey];
-          if (_code == null) {
-            _code = (response.data[_statusKey] is String)
-                ? int.tryParse(response.data[_statusKey])
-                : response.data[_statusKey];
-          }
-          _msg = response.data[_msgKey];
-          _data = response.data[_dataKey];
-        } else {
-          Map<String, dynamic> _dataMap = _decodeData(response);
-          _status = (_dataMap[_statusKey] is int)
-              ? _dataMap[_statusKey].toString()
+
+        Map<String, dynamic> _dataMap = _decodeData(response);
+        _status = (_dataMap[_statusKey] is int)
+            ? _dataMap[_statusKey].toString()
+            : _dataMap[_statusKey];
+        _code = (_dataMap[_codeKey] is String)
+            ? int.tryParse(_dataMap[_codeKey])
+            : _dataMap[_codeKey];
+        if (_code == null) {
+          _code = (_dataMap[_statusKey] is String)
+              ? int.tryParse(_dataMap[_statusKey])
               : _dataMap[_statusKey];
-          _code = (_dataMap[_codeKey] is String)
-              ? int.tryParse(_dataMap[_codeKey])
-              : _dataMap[_codeKey];
-          if (_code == null) {
-            _code = (_dataMap[_statusKey] is String)
-                ? int.tryParse(_dataMap[_statusKey])
-                : _dataMap[_statusKey];
-          }
-          _msg = _dataMap[_msgKey];
-          _data = _dataMap[_dataKey];
         }
+        _msg = _dataMap[_msgKey];
+        _data = _dataMap[_dataKey];
+
+//        if (response.data is Map) {
+//          _status = (response.data[_statusKey] is int)
+//              ? response.data[_statusKey].toString()
+//              : response.data[_statusKey];
+//          _code = (response.data[_codeKey] is String)
+//              ? int.tryParse(response.data[_codeKey])
+//              : response.data[_codeKey];
+//          if (_code == null) {
+//            _code = (response.data[_statusKey] is String)
+//                ? int.tryParse(response.data[_statusKey])
+//                : response.data[_statusKey];
+//          }
+//          _msg = response.data[_msgKey];
+//          _data = response.data[_dataKey];
+//        } else {
+//
+//        }
       } catch (e) {
         return new Future.error(new DioError(
           response: response,
@@ -386,9 +379,8 @@ class DioUtil {
     return options;
   }
 
-  setInterceptor() {
-    _dio.interceptors
-        .add(LogOfFormatInterceptor(requestBody: true, responseBody: true));
+  addInterceptor(List<Interceptor> interceptors) {
+    _dio.interceptors.addAll(interceptors);
   }
 
   setOption(RequestOptions opt) {

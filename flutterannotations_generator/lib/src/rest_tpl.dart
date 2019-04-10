@@ -64,7 +64,7 @@ class {{{className}}}Impl extends {{{className}}}{
     headers = <String, dynamic>{{{.}}};
     {{/headers}}
     
-    _dio.{{{methodAnnotationName}}}(path,data: data, options:options,queryParameters: queryParameters)
+    _dio.{{{methodAnnotationName}}}<{{methodGenericType}}>(path,data: data, options:options,queryParameters: queryParameters)
           .then((response) {
         _execute(response, (data) {
             {{#returnType}}
