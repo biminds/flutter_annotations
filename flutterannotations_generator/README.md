@@ -64,19 +64,19 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
         
         // WRONG
         @Get(path: "queryTeachers")
-        List<HomeBannerModel> getData<List>(@Param() String name,@Param() int id); // Wrong, method return must be HomeBannerModel
+        List<HomeBannerModel> getData<L>(@Param() String name,@Param() int id); // Wrong, method return must be HomeBannerModel
         
         // OK
         @Get(path: "queryTeachers")
-        HomeBannerModel getData<List>(@Param() String name,@Param() int id); // OK, method return must be HomeBannerModel
+        HomeBannerModel getData<L>(@Param() String name,@Param() int id); // OK, method return must be HomeBannerModel
 
         // WRONG
         @Get(path: "queryTeachers")
-        Map<HomeBannerModel> getData<Map>(@Param() String name,@Param() int id); // Wrong, method return must be HomeBannerModel
+        Map<HomeBannerModel> getData<M>(@Param() String name,@Param() int id); // Wrong, method return must be HomeBannerModel
         
         // OK
         @Get(path: "queryTeachers")
-        HomeBannerModel getData<Map>(@Param() String name,@Param() int id); // OK, method return must be HomeBannerModel        
+        HomeBannerModel getData<M>(@Param() String name,@Param() int id); // OK, method return must be HomeBannerModel        
         
       }
    ```   
@@ -171,7 +171,7 @@ example:
 
 ```yaml
 dev_dependencies:
-  flutterannotations_generator: ^1.0.0
+  flutterannotations_generator: ^1.0.1
 ```
 
 ## install from source code
