@@ -1,7 +1,7 @@
 const String clazzTpl = """
 
-import 'package:dio/dio.dart';
-import 'package:flutterannotations/src/net/dio_util.dart';
+import 'package:flutterannotations/flutterannotations.dart';
+
 
 {{#restAnnotationMap}}
 
@@ -24,7 +24,14 @@ class {{{className}}}Impl extends {{{className}}}{
     _dio=DioUtil();
      RequestOptions requestOptions =RequestOptions();
     requestOptions.baseUrl={{{rootUrl}}};
-    _dio.setOption(requestOptions);
+    HttpConfig httpConfig = HttpConfig({{#resultCode}}code:{{.}},{{/resultCode}} {{#resultMessage}}msg:{{.}},{{/resultMessage}}{{#resultData}}data:{{.}},{{/resultData}}options:requestOptions);
+    
+    List<Interceptor> interceptors = <Interceptor>[];
+    {{#interceptors}}
+      interceptors.add({{.}}());
+    {{/interceptors}}
+    _dio.addInterceptor(interceptors);
+    _dio.setConfig(httpConfig);
   }
 
   {{#methods}}
@@ -39,7 +46,9 @@ class {{{className}}}Impl extends {{{className}}}{
     {{/methodAnnotationParameters}} 
     
     Map<String, dynamic> queryParameters = <String, dynamic>{};
-             
+    
+    Map<String, dynamic> headers = <String, dynamic>{};  
+           
     var data ={};
     {{#data}}
     data ={{.}};
@@ -49,7 +58,13 @@ class {{{className}}}Impl extends {{{className}}}{
     queryParameters = <String, dynamic>{{{.}}};
     {{/queryParameters}}
     
-    _dio.{{{methodAnnotationName}}}<{{methodGenericType}}>(path,data: data, queryParameters: queryParameters)
+    Options options =Options(headers:headers);
+    
+    {{#headers}}
+    headers = <String, dynamic>{{{.}}};
+    {{/headers}}
+    
+    _dio.{{{methodAnnotationName}}}<{{methodGenericType}}>(path,data: data, options:options,queryParameters: queryParameters)
           .then((response) {
         _execute(response, (data) {
             {{#returnType}}

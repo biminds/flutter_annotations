@@ -16,7 +16,7 @@ builders:
   annotation_write_builder:
     import: 'package:flutterannotations_generator/src/builder.dart'
     builder_factories: ['flutterAnnotationsWriteBuilder']
-    build_extensions: { '.route.dart': ['.internal.dart'] }
+    build_extensions: { '.dart': ['.internal.dart'] }
     auto_apply: root_package
     build_to: source
 

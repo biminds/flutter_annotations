@@ -171,7 +171,7 @@ example:
 
 ```yaml
 dependencies:
-  flutterannotations: any
+  flutterannotations: ^1.0.0
 ```
 
 ## install from source code

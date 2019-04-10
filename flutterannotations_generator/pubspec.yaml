@@ -17,8 +17,8 @@ dependencies:
   mustache4dart: ^3.0.0-dev.0.0
   # Use a tight version constraint to ensure that a constraint on
   # `json_annotation` properly constrains all features it provides.
-  flutterannotations: ^1.0.0
-#    path: ../flutterannotations
+  flutterannotations: #^1.0.0
+    path: ../flutterannotations
 dev_dependencies:
   build_runner: ^1.3.1
   test: any

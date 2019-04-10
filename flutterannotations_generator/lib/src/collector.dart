@@ -2,6 +2,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:mustache4dart/mustache4dart.dart';
+import 'package:dio/dio.dart';
 import 'rest_tpl.dart';
 
 class RestCollector {
@@ -10,6 +11,10 @@ class RestCollector {
   //{
   //  	"className":"RestClient",
   //    "rootUrl":"http://adfadfaadsad",
+  //    "resultCode":"code",
+  //    "resultMessage":"errorMsg",
+  //    "resultData":"data",
+  //    "interceptors":"[A,B]",
   //  	"classDocumentationComment":"balabalabal",
   //		"methods": [{
   //			"methodName": "getData",
@@ -18,15 +23,15 @@ class RestCollector {
   //			"queryParameters": {
   //        "pageSize":"1",
   //      },
-  //			"data":"data",
+  //			"data":"{
+  //        "token":"dafdasdfa"
+  //       }",
+  //			"headers":"{
+  //        "foo":"foo"
+  //       }",
   //			"methodParameters": [{
   //				"parameterType": "String",
-  //				"parameterName": "sq",
-  //				"parametersAnnotation": {
-  //					"parameterAnnotationName": "Body",
-  //					"parameterAnnotationParameters": {
-  //						"name": ""
-  //					}
+  //				"parameterName": "sq"
   //				}
   //			}],
   //			"methodAnnotation": {
@@ -50,6 +55,19 @@ class RestCollector {
     restAnnotationMap["className"] = element.name;
 
     restAnnotationMap["rootUrl"] = wK(reader.peek("rootUrl")?.stringValue);
+    restAnnotationMap["resultData"] =
+        wK(reader.peek("resultData")?.stringValue);
+    restAnnotationMap["resultMessage"] =
+        wK(reader.peek("resultMessage")?.stringValue);
+    restAnnotationMap["resultCode"] =
+        wK(reader.peek("resultCode")?.stringValue);
+
+    List<String> interceptors = <String>[];
+    reader.peek("interceptors")?.listValue?.forEach((interceptor) {
+      interceptors.add(interceptor.toTypeValue().name);
+    });
+
+    restAnnotationMap["interceptors"] = interceptors;
 
     restAnnotationMap["classDocumentationComment"] =
         element.documentationComment;
@@ -96,7 +114,6 @@ class RestCollector {
       importClazz(method.returnType.element, importList);
     }
     methodMap['returnType'] = returnType;
-//    print("==============${method.returnType.element.location.components}");
 
     method.typeParameters.forEach((e) {
       methodMap['methodGeneric'] = e.name;
@@ -105,12 +122,16 @@ class RestCollector {
     String methodGeneric = methodMap['methodGeneric'];
 
     if (methodGeneric == "List" || methodGeneric == "Map") {
-      methodMap['methodGenericType'] = methodGeneric;
+      methodMap['methodGeneric'] = methodGeneric.substring(0, 1);
+      methodMap['methodGenericType'] = "List";
     } else {
       methodMap['methodGenericType'] = "Map";
     }
 
     Map<String, dynamic> methodAnnotation = <String, dynamic>{};
+    Map<String, dynamic> headers = <String, dynamic>{};
+    methodMap['headers'] = headers;
+
     methodMap['methodAnnotation'] = methodAnnotation;
 
     //获取方法中的注解 并且遍历
@@ -128,6 +149,10 @@ class RestCollector {
           ConstantReader constantReader = ConstantReader(dartObject);
           //获取 注解类里的 参数
           String path = constantReader.peek("path")?.stringValue;
+          constantReader.peek("header")?.mapValue?.forEach((key, value) {
+            headers[wK(key.toStringValue())] = wK(value.toStringValue());
+          });
+
           methodAnnotationParameters["path"] = wK(path);
           methodAnnotation["methodAnnotationParameters"] =
               methodAnnotationParameters;
@@ -154,42 +179,18 @@ class RestCollector {
         switch (dartObject.type.name) {
           case "Body":
             methodMap["data"] = typeParameter.name;
-            ConstantReader constantReader = ConstantReader(dartObject);
-            String name = constantReader.peek("name")?.stringValue;
-
-            Map<String, dynamic> parametersAnnotation = <String, dynamic>{};
-            methodParameters["parametersAnnotation"] = parametersAnnotation;
-
-            parametersAnnotation["parameterAnnotationName"] =
-                wK(dartObject.type.name);
-
-            Map<String, dynamic> parameterAnnotationParameters =
-                <String, dynamic>{};
-            parameterAnnotationParameters["name"] = name;
-            parametersAnnotation["parameterAnnotationParameters"] =
-                parameterAnnotationParameters;
             break;
           case "Param":
           case "Path":
-            queryParameters[wK(typeParameter.name)] = typeParameter.name;
-
             ConstantReader constantReader = ConstantReader(dartObject);
             String name = constantReader.peek("name")?.stringValue;
-
-            Map<String, dynamic> parametersAnnotation = <String, dynamic>{};
-            methodParameters["parametersAnnotation"] = parametersAnnotation;
-
-            parametersAnnotation["parameterAnnotationName"] =
-                wK(dartObject.type.name);
-
-            Map<String, dynamic> parameterAnnotationParameters =
-                <String, dynamic>{};
-            parameterAnnotationParameters["name"] = name;
-            parametersAnnotation["parameterAnnotationParameters"] =
-                parameterAnnotationParameters;
-
+            queryParameters[wK(name ?? typeParameter.name)] =
+                typeParameter.name;
             break;
           case "Header":
+            ConstantReader constantReader = ConstantReader(dartObject);
+            String name = constantReader.peek("name")?.stringValue;
+            headers[wK(name ?? typeParameter.name)] = typeParameter.name;
             break;
           default:
         }
