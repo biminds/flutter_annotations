@@ -261,7 +261,6 @@ class DioUtil {
     if (response.statusCode == HttpStatus.ok ||
         response.statusCode == HttpStatus.created) {
       try {
-
         Map<String, dynamic> _dataMap = _decodeData(response);
         _status = (_dataMap[_statusKey] is int)
             ? _dataMap[_statusKey].toString()
