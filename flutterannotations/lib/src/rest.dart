@@ -1,7 +1,4 @@
-import 'package:flutterannotations/flutterannotations.dart';
-import 'package:meta/meta.dart';
 
-@immutable
 class Rest {
   final String rootUrl;
 
@@ -52,7 +49,6 @@ class AAMethod {
  * @see Delete
  * @see Body
  */
-@immutable
 class Post extends AAMethod {
   const Post(String path, {Map<String, String> header})
       : super(path, header: header);
@@ -88,7 +84,6 @@ class Post extends AAMethod {
  * @see Delete
  * @see Head
  */
-@immutable
 class Get extends AAMethod {
   const Get(String path, {Map<String, String> header})
       : super(path, header: header);
@@ -108,7 +103,6 @@ class Get extends AAMethod {
  * @see Put
  * @see Body
  */
-@immutable
 class Delete extends AAMethod {
   const Delete(String path, {Map<String, String> header})
       : super(path, header: header);
@@ -130,7 +124,6 @@ class Delete extends AAMethod {
  * @see Head
  * @see Body
  */
-@immutable
 class Put extends AAMethod {
   const Put(String path, {Map<String, String> header})
       : super(path, header: header);
@@ -144,7 +137,6 @@ class Put extends AAMethod {
  * @see Post
  * @see Put
  */
-@immutable
 class Body {
   const Body();
 }
@@ -163,7 +155,6 @@ class Body {
  **
  * @see Rest
  */
-@immutable
 class Param {
   /**
    * Name of the url variable.
@@ -189,7 +180,6 @@ class Param {
  **
  * @see Rest
  */
-@immutable
 class Path {
   /**
    * Name of the url variable.
@@ -204,7 +194,6 @@ class Path {
 /// Override header using method parameter
 /// @Get()
 /// fetch(@Header('foo') String headerFoo)
-@immutable
 class Header {
   final String name;
 
