@@ -5,9 +5,9 @@ class LogOfFormatInterceptor extends LogInterceptor {
   LogOfFormatInterceptor({
     request = true,
     requestHeader = true,
-    requestBody = false,
+    requestBody = true,
     responseHeader = true,
-    responseBody = false,
+    responseBody = true,
     error = true,
     logSize = 2048,
   }) : super(

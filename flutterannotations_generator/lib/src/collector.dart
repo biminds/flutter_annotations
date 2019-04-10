@@ -20,6 +20,7 @@ class RestCollector {
   //			"methodName": "getData",
   //      "methodGeneric":"Map",
   //      "methodGenericType":"Map",
+  //      "parseType":"Map",
   //			"queryParameters": {
   //        "pageSize":"1",
   //      },
@@ -121,9 +122,9 @@ class RestCollector {
 
     String methodGeneric = methodMap['methodGeneric'];
 
-    if (methodGeneric == "List" || methodGeneric == "Map") {
-      methodMap['methodGeneric'] = methodGeneric.substring(0, 1);
+    if (methodGeneric == "L") {
       methodMap['methodGenericType'] = "List";
+      methodMap['parseType'] = ()=> null;
     } else {
       methodMap['methodGenericType'] = "Map";
     }
