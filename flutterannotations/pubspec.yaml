@@ -2,7 +2,7 @@ name: flutterannotations
 description: >-
   Fast Flutter Development. Easy maintenance.
   Automatically generate code for converting to and from your abstract class by annotating Dart classes.
-version: 1.0.2
+version: 1.0.3
 author: Leo<leo@biminds.cn>
 homepage:  https://github.com/biminds/flutter_annotations.git
 

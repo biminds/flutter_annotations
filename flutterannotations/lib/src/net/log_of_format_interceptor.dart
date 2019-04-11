@@ -21,7 +21,7 @@ class LogOfFormatInterceptor extends LogInterceptor {
 
   @override
   onRequest(RequestOptions options) {
-    print('======================== Request End========================');
+    print('======================== Request Start========================');
     printKV('uri', options.uri);
     if (request) {
       printKV('method', options.method);
@@ -42,6 +42,7 @@ class LogOfFormatInterceptor extends LogInterceptor {
       print("data:");
       _printDataStr(options.data);
     }
+    print('======================== Request End========================');
   }
 
   @override

@@ -158,6 +158,17 @@ class Param {
   const Param([this.name]);
 }
 
+// Define query parameters of a request as Map<String, dynamic>
+///
+///     @Get(path: '/something')
+///     fetch(@QueryMap() Map<String, dynamic> query);
+///
+///     fetch({"foo":"bar","aa":"11"});
+///     // will request following path: /something?foo=bar&aa=11
+class ParamMap {
+  const ParamMap();
+}
+
 /// *
 /// * This annotation can be used to mark a method parameter to be an url variable.
 /// * This annotation is optional, because method parameters which are not
