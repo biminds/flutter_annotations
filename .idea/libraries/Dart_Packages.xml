@@ -153,7 +153,7 @@
         <entry key="flutterannotations">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/flutterannotations-1.0.1/lib" />
+              <option value="$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/flutterannotations-1.0.2/lib" />
             </list>
           </value>
         </entry>
@@ -518,7 +518,7 @@
       <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/dio-2.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/dio-2.1.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/fixnum-0.10.9/lib" />
-      <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/flutterannotations-1.0.1/lib" />
+      <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/flutterannotations-1.0.2/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/front_end-0.1.15/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/glob-1.1.7/lib" />
       <root url="file://$PROJECT_DIR$/../../../flutter/.pub-cache/hosted/pub.flutter-io.cn/graphs-0.2.0/lib" />

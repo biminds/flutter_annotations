@@ -261,7 +261,12 @@ class DioUtil {
     if (response.statusCode == HttpStatus.ok ||
         response.statusCode == HttpStatus.created) {
       try {
-        Map<String, dynamic> _dataMap = _decodeData(response);
+        Map<String, dynamic> _dataMap;
+        if (response.data is Map) {
+          _dataMap = response.data;
+        } else {
+          _dataMap = _decodeData(response);
+        }
         _status = (_dataMap[_statusKey] is int)
             ? _dataMap[_statusKey].toString()
             : _dataMap[_statusKey];
@@ -275,31 +280,11 @@ class DioUtil {
         }
         _msg = _dataMap[_msgKey];
         _data = _dataMap[_dataKey];
-
-//        if (response.data is Map) {
-//          _status = (response.data[_statusKey] is int)
-//              ? response.data[_statusKey].toString()
-//              : response.data[_statusKey];
-//          _code = (response.data[_codeKey] is String)
-//              ? int.tryParse(response.data[_codeKey])
-//              : response.data[_codeKey];
-//          if (_code == null) {
-//            _code = (response.data[_statusKey] is String)
-//                ? int.tryParse(response.data[_statusKey])
-//                : response.data[_statusKey];
-//          }
-//          _msg = response.data[_msgKey];
-//          _data = response.data[_dataKey];
-//        } else {
-//
-//        }
       } catch (e) {
-        return new Future.error(new DioError(
-          response: response,
-          message: "data parsing exception...",
-          type: DioErrorType.RESPONSE,
-        ));
+        return new BaseResp("-3", -3, "data parsing exception... ${e}", _data);
       }
+    } else {
+      return new BaseResp("-2", -2, "timeout", _data);
     }
     return new BaseResp(_status, _code, _msg, _data);
   }

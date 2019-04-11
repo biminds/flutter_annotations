@@ -84,7 +84,7 @@ class {{{className}}}Impl extends {{{className}}}{
             {{/nullType}}
         }, failCallback: failCallback);
         }, onError: (err) {
-        failCallback(1, err.toString());
+        failCallback(err.errorCode, err.errorMsg);
       });
      {{/methodAnnotation}} 
     return null;      

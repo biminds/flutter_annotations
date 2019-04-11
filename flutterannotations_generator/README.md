@@ -149,7 +149,7 @@ The Rest API works with a @Rest annotated interface. It's the entry point.
        
       }
    ```   
-6. run the build_annotation_route.sh in your workspace Or just run the command below in your workspace  
+6. run the command below in your workspace  
    build:
 
    ```shell
@@ -171,7 +171,7 @@ example:
 
 ```yaml
 dev_dependencies:
-  flutterannotations_generator: ^1.0.1
+  flutterannotations_generator: ^1.0.2
 ```
 
 ## install from source code
