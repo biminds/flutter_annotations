@@ -181,21 +181,23 @@ class RestCollector {
       //获取参数中的注解 并且遍历
       typeParameter.metadata.forEach((parameterAnnotation) {
         DartObject dartObject = parameterAnnotation.computeConstantValue();
+        ConstantReader constantReader = ConstantReader(dartObject);
         switch (dartObject.type.name) {
           case "Body":
             methodMap["data"] = typeParameter.name;
             break;
           case "Param":
           case "Path":
-            ConstantReader constantReader = ConstantReader(dartObject);
             String name = constantReader.peek("name")?.stringValue;
             queryParameters[wK(name ?? typeParameter.name)] =
                 typeParameter.name;
             break;
           case "Header":
-            ConstantReader constantReader = ConstantReader(dartObject);
             String name = constantReader.peek("name")?.stringValue;
             headers[wK(name ?? typeParameter.name)] = typeParameter.name;
+            break;
+          case "ParamMap":
+            methodMap["paramMap"] = typeParameter.name;
             break;
           default:
         }

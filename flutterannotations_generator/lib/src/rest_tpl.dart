@@ -58,6 +58,10 @@ class {{{className}}}Impl extends {{{className}}}{
     queryParameters = <String, dynamic>{{{.}}};
     {{/queryParameters}}
     
+    {{#paramMap}}
+    queryParameters.addAll({{.}});
+    {{/paramMap}}
+    
     Options options =Options(headers:headers);
     
     {{#headers}}

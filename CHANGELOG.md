@@ -1,3 +1,5 @@
+## 1.0.3
+* add the 'ParamMap' annotations
 
 ## 1.0.2
 

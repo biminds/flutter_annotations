@@ -6,6 +6,12 @@
 Fast Flutter Development. Easy maintenance.
 
 
+
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://pub.dartlang.org/packages/flutterannotations_generator)
+[![Build Status](https://travis-ci.org/theyakka/fluro.svg?branch=master)](https://github.com/biminds/flutter_annotations)
+
+
+
 # Usage
 
 # Create your REST API interface
