@@ -5,6 +5,8 @@
 
 Fast Flutter Development. Easy maintenance.
 
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://pub.dartlang.org/packages/flutterannotations)
+
 
 # Usage
 
@@ -171,7 +173,7 @@ example:
 
 ```yaml
 dependencies:
-  flutterannotations: ^1.0.2
+  flutterannotations: ^1.0.3
 ```
 
 ## install from source code
