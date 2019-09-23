@@ -173,7 +173,7 @@ example:
 
 ```yaml
 dependencies:
-  flutterannotations: ^1.0.3
+  flutterannotations: ^1.0.2
 ```
 
 ## install from source code
