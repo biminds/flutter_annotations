@@ -5,7 +5,7 @@
 
 Fast Flutter Development. Easy maintenance.
 
-[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](https://pub.dartlang.org/packages/flutterannotations)
+[![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)](https://pub.dartlang.org/packages/flutterannotations)
 
 # Usage
 
@@ -172,7 +172,7 @@ example:
 
 ```yaml
 dependencies:
-  flutterannotations: ^1.0.3
+  flutterannotations: ^1.0.2
 
 dev_dependencies:
   flutterannotations_generator: ^1.0.2
