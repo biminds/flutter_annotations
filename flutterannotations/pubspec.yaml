@@ -12,6 +12,6 @@ environment:
 dependencies:
   analyzer: ^0.36.0
   #latest version  https://github.com/flutterchina/dio
-  dio: ^2.1.0
+  dio: ">=2.1.0 <6.0.0"
 
 
